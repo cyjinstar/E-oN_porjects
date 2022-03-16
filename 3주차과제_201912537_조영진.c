@@ -15,9 +15,8 @@ int main(){
     int answer = 0;
     printf("enter 6 numbers \n");
 
-    for(i = 0; i <6; i++){
-        scanf("%d", &arr[i]); // 배열의 앞 공간부터 입력받은 숫자를 저장
-    }
+    scanf("%d, %d, %d, %d, %d, %d", &arr[0], &arr[1], &arr[2], &arr[3], &arr[4], &arr[5]); // 입력받은 숫자들을 배열의 각 자리에 입력
+
     answer = calc_add(arr);
     printf("%d", answer);
     
