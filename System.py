@@ -52,11 +52,6 @@ class Book_def : #도서 관리 클래스
         for i in DB.BookLists:
             print(i,"\n")
 
-
-def DBtoList(listA):
-    DBlists = [line.rstrip('\n') for line in listA]
-    return DBlists
-
 while 1 :
     print("Book Management System.\n")
     Menu.Select(DB.BookLists)
