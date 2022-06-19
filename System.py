@@ -6,6 +6,7 @@ import os
 #마지막주차_기차표예매_프로그램
 
 idx = 0
+reserveCnt = 0
 
 class Menu : #메뉴 클래스
     def __init__(self) -> None:
@@ -18,6 +19,7 @@ class Menu : #메뉴 클래스
         print("4. 프로그램 종료\n")
         num = input("목록에서 수행할 기능을 입력하세요. : ")
         global idx
+        global reserveCnt
         if num == "1" :
             idx = Train_def.Train_search(TrainList)
             print(idx)
@@ -27,8 +29,13 @@ class Menu : #메뉴 클래스
             Train_def.Train_print(TrainList)
             Train_def.back_to_menu()
         elif num == "3" : 
-            print(DB.TrainList[idx])
-            Train_def.back_to_menu()
+            if reserveCnt == 0 :
+                print("\n예약된 표가 없습니다.\n")
+                Train_def.back_to_menu()
+            else :
+                print("나의 예매")
+                print(DB.TrainList[idx]+"\n")
+                Train_def.back_to_menu()
         elif num == "4" : 
             Train_def.Train_save()
             os._exit(1)
@@ -40,7 +47,6 @@ class Train_def : #
         pass
 
     def Train_print(Tlist) : #전체 기차표 출력 함수
-        inx = 1
         print("\n출발시간,출발지,도착지,열차종류,잔여좌석수")
         for i in Tlist:
             splitList = i.split()
@@ -87,6 +93,10 @@ class Train_def : #
             sl = DB.TrainList[index].split()
             sl[5] = str(int(sl[5])-1)
             DB.TrainList[index] = ' '.join(sl)
+            global reserveCnt
+            global idx
+            reserveCnt += 1
+            idx = index
         else : Menu.Select(DB.TrainList)
 
     def Train_save() : 
