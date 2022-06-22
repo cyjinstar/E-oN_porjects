@@ -35,6 +35,7 @@ class Menu : #메뉴 클래스
             else :
                 print("나의 예매")
                 print(DB.TrainList[idx]+"\n")
+                Train_def.Train_Cancel(idx)
                 Train_def.back_to_menu()
         elif num == "4" : 
             Train_def.Train_save()
@@ -98,6 +99,22 @@ class Train_def : #
             reserveCnt += 1
             idx = index
         else : Menu.Select(DB.TrainList)
+
+    def Train_Cancel(index) :
+        cancel = input("예매 취소 : 1 메뉴로 돌아가기 : 0\n")
+        if cancel == "1" :
+            sl = DB.TrainList[index].split()
+            sl[5] = str(int(sl[5])+1)
+            DB.TrainList[index] = ' '.join(sl)
+            global reserveCnt
+            global idx
+            reserveCnt -= 1
+            idx = 0
+        elif cancel == "0" :
+            Menu.Select(DB.TrainList)
+        else :
+            print("잘못된 명령입니다.") 
+            Menu.Select(DB.TrainList)
 
     def Train_save() : 
         with open('TrainList.txt','wt') as f:
